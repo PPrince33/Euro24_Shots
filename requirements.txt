@@ -8,5 +8,4 @@ colored
 statsbombpy
 seaborn
 ipywidgets
-IPython.display
-plotly.express
+IPython
