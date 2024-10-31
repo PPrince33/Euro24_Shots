@@ -9,7 +9,7 @@ from PIL import Image
 
 # Load the data
 euro24_matches = sb.matches(season_id=282, competition_id=55)
-euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_matches['home_team'] + ' vs ' + euro24_matches['away_team']
+euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_matches['home_team'] + '(' +euro24_matches['home_score'] + ')' + ' vs ' + euro24_matches['away_team'] + euro24_matches['away_score']
 unique_matches = euro24_matches['match'].unique().tolist()
 
 # Streamlit UI for Match Selection
@@ -23,6 +23,7 @@ if match:
     df_shots = df_shots[df_shots.type == 'Shot']
     # Calculate and display team shot statistics as a table
     team_shots = df_shots.groupby('team')['team'].count().reset_index(name='Total Shots')
+    
     st.table(team_shots) 
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
