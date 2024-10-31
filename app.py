@@ -54,6 +54,8 @@ if match:
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
             fig, ax = pitch.draw(figsize=(10, 6))
             ax.set_xlim(75, 130)
+            fig.patch.set_facecolor('black')  # Set figure background to black
+            ax.set_facecolor('black')  
 
             # Plot shot details
             x, y = selected_shot['location']
@@ -76,8 +78,11 @@ if match:
             
             # Convert plot to image for Streamlit display
             buf = io.BytesIO()
-            fig.savefig(buf, format="png")
+            fig.savefig(buf, format="png", facecolor='black')
             buf.seek(0)
+
+
+            
             image = Image.open(buf)
             st.image(image, caption="Shot Visualization", use_column_width=True)
             
