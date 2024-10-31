@@ -21,71 +21,66 @@ if match:
     selected_match_id = euro24_matches[euro24_matches['match'] == match]['match_id'].values[0]
     df_shots = sb.events(match_id=selected_match_id)
     df_shots = df_shots[df_shots.type == 'Shot']
-
     
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
     # Plot pitch with shot information
     if shot_id:
-        selected_shot1 = df_shots[df_shots.id == shot_id].iloc[0].reset_index(drop=True)
-        selected_shot = df_shots[df_shots.id == shot_id].iloc[0].reset_index(drop=True)
-
-
-        data = selected_shot.at[0, 'shot_freeze_frame']
-    
-    # Check if data is a list, otherwise skip the iteration
+        # Access shot details for selected shot
+        selected_shot = df_shots[df_shots.id == shot_id].iloc[0]
+        
+        # Extract 'shot_freeze_frame' safely
+        data = selected_shot.get('shot_freeze_frame', None)
+        
+        # Check if data is a list, otherwise skip the iteration
         if isinstance(data, list):
-        # Convert to DataFrame
-                df = pd.DataFrame([{
-                    'location_x': item['location'][0],
-                    'location_y': item['location'][1],
-                    'player_name': item['player']['name'],
-                    'teammate': item['teammate']
-                        } for item in data])
+            # Convert to DataFrame
+            df = pd.DataFrame([{
+                'location_x': item['location'][0],
+                'location_y': item['location'][1],
+                'player_name': item['player']['name'],
+                'teammate': item['teammate']
+            } for item in data])
 
-        
-        selected_shot=pd.concat([selected_shot] * df.shape[0], ignore_index=True)
+            # Repeat selected_shot details to match the freeze frame data rows
+            shot_info_df = pd.DataFrame([selected_shot] * len(df)).reset_index(drop=True)
+            df = pd.concat([shot_info_df, df], axis=1)
+            
+            # Create pitch plot
+            pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
+            fig, ax = pitch.draw(figsize=(10, 6))
+            ax.set_xlim(75, 130)
 
-        
-        # Create pitch plot
-        pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-        fig, ax = pitch.draw(figsize=(10, 6))
-        ax.set_xlim(75, 130)
+            # Plot shot details
+            x, y = selected_shot['location']
+            end_x, end_y = selected_shot['shot_end_location'][:2]
+            plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
+            plt.scatter(x, y, color='yellow', marker='o')
 
-        # Plot shot details
-        x, y = selected_shot1['location']
-        end_x, end_y = selected_shot1['shot_end_location'][:2]
-        plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
-        plt.scatter(x, y, color='yellow', marker='o')
-        for i in range(len(selected_shot)):
-                    # Location markers based on teammate status
-            if df_each_shoot.iloc[i]['teammate']:
-                plt.scatter(selected_shot.iloc[i]['location_x'], df_each_shoot.iloc[i]['location_y'], color='green')
-            else:
-                plt.scatter(df_each_shoot.iloc[i]['location_x'], df_each_shoot.iloc[i]['location_y'], color='red')
-    
-    # Add dummy points for legend only
-        plt.scatter([], [], color='yellow', marker='o', label='Shooter')
-        plt.scatter([], [], color='green', marker='o', label='Attackers')
-        plt.scatter([], [], color='red', marker='o', label='Difenders')
+            # Plot freeze frame data
+            for i in range(len(df)):
+                if df.iloc[i]['teammate']:
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='green')
+                else:
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='red')
 
-
-
-
-
-
-        
-        # Convert plot to image for Streamlit display
-        buf = io.BytesIO()
-        fig.savefig(buf, format="png")
-        buf.seek(0)
-        image = Image.open(buf)
-        st.image(image, caption="Shot Visualization", use_column_width=True)
-        
-        # Display shot details in a table format
-        st.write(f"**Shot Time:** {selected_shot['timestamp']}")
-        st.write(f"**Team:** {selected_shot['team']}")
-        st.write(f"**Player:** {selected_shot['player']}")
-        st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
-        st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
+            # Add dummy points for legend
+            plt.scatter([], [], color='yellow', marker='o', label='Shooter')
+            plt.scatter([], [], color='green', marker='o', label='Attackers')
+            plt.scatter([], [], color='red', marker='o', label='Defenders')
+            plt.legend(loc="upper left")
+            
+            # Convert plot to image for Streamlit display
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png")
+            buf.seek(0)
+            image = Image.open(buf)
+            st.image(image, caption="Shot Visualization", use_column_width=True)
+            
+            # Display shot details in a table format
+            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+            st.write(f"**Team:** {selected_shot['team']}")
+            st.write(f"**Player:** {selected_shot['player']}")
+            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
+            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
