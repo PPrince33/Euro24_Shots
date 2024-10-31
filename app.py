@@ -107,6 +107,17 @@ if match:
                 ax_goal.axvline(44, color='red', linestyle='--')  # Right post
                 ax_goal.axhline(0, color='red', linestyle='--')   # Goal line
                 ax_goal.axhline(2.66, color='red', linestyle='--')  # Crossbar
+
+                        # Update layout to make it equal aspect ratio and set limits
+                ax_goal.update_layout(
+                    xaxis=dict(scaleanchor="y", constrain="domain", range=[30, 50]),
+                    yaxis=dict(constrain="domain", range=[0, 4])
+                    )
+
+
+
+
+
                 
                 ax_goal.set_xlim(30, 50)
                 ax_goal.set_ylim(0, 4)
