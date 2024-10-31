@@ -9,7 +9,7 @@ from PIL import Image
 
 # Load the data
 euro24_matches = sb.matches(season_id=282, competition_id=55)
-euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_matches['home_team'] + '(' +euro24_matches['home_score'] + ')' + ' vs ' + euro24_matches['away_team'] + euro24_matches['away_score']
+euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_matches['home_team'] + '(' + euro24_matches['home_score'] + ')' + ' vs ' + euro24_matches['away_team'] + '(' + euro24_matches['away_score'] + ')'
 unique_matches = euro24_matches['match'].unique().tolist()
 
 # Streamlit UI for Match Selection
