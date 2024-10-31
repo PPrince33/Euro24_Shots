@@ -69,7 +69,7 @@ if match:
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
             fig, ax = pitch.draw(figsize=(10, 6))
-            ax.set_xlim(60, 130)
+            ax.set_xlim(60, 121)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
 
