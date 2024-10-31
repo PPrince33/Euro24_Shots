@@ -16,6 +16,7 @@ unique_matches = euro24_matches['match'].unique().tolist()
 st.title("Euro 2024 Shot Analysis")
 match = st.selectbox("Select Match:", unique_matches)
 
+
 # Filter shots based on selected match
 if match:
     selected_match_id = euro24_matches[euro24_matches['match'] == match]['match_id'].values[0]
@@ -23,7 +24,23 @@ if match:
     df_shots = df_shots[df_shots.type == 'Shot']
     # Calculate and display team shot statistics as a table
     team_shots = df_shots.groupby('team')['team'].count().reset_index(name='Total Shots')
-    st.table(team_shots.style.hide_index())
+    
+    # Group by team and count total shots
+
+    # Remove the index from the DataFrame
+    team_shots = team_shots.reset_index(drop=True)
+
+# Display the table in Streamlit without the index
+    st.table(team_shots)
+
+
+
+
+
+
+
+
+    
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
