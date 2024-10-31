@@ -16,31 +16,17 @@ unique_matches = euro24_matches['match'].unique().tolist()
 st.title("Euro 2024 Shot Analysis")
 match = st.selectbox("Select Match:", unique_matches)
 
-
 # Filter shots based on selected match
 if match:
     selected_match_id = euro24_matches[euro24_matches['match'] == match]['match_id'].values[0]
     df_shots = sb.events(match_id=selected_match_id)
     df_shots = df_shots[df_shots.type == 'Shot']
+    
     # Calculate and display team shot statistics as a table
     team_shots = df_shots.groupby('team')['team'].count().reset_index(name='Total Shots')
-    
-    # Group by team and count total shots
-
-    # Remove the index from the DataFrame
     team_shots = team_shots.reset_index(drop=True)
-
-# Display the table in Streamlit without the index
     st.table(team_shots)
 
-
-
-
-
-
-
-
-    
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
@@ -76,6 +62,8 @@ if match:
             # Plot shot details
             x, y = selected_shot['location']
             end_x, end_y = selected_shot['shot_end_location'][:2]
+            end_z = selected_shot['shot_end_location'][2] if len(selected_shot['shot_end_location']) > 2 else None
+
             plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
             plt.scatter(x, y, color='yellow', marker='o')
 
@@ -92,21 +80,43 @@ if match:
             plt.scatter([], [], color='red', marker='o', label='Defenders')
             
             plt.legend()
-            # Convert plot to image for Streamlit display
+            
+            # Convert pitch plot to image for Streamlit display
             buf = io.BytesIO()
             fig.savefig(buf, format="png", facecolor='black')
             buf.seek(0)
 
-
-            
             image = Image.open(buf)
             # Rotate the image 90 degrees counterclockwise (to the left)
             image = image.rotate(90, expand=True)
             st.image(image, caption="Shot Visualization", use_column_width=True)
-            
+
             # Display shot details in a table format
             st.write(f"**Shot Time:** {selected_shot['timestamp']}")
             st.write(f"**Team:** {selected_shot['team']}")
             st.write(f"**Player:** {selected_shot['player']}")
             st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
             st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
+
+            # Optional - Plot shot end location on a goal-like grid if `end_z` exists
+            if end_z is not None:
+                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
+                ax_goal.set_facecolor('black')
+                ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
+                ax_goal.axvline(36, color='red', linestyle='--')  # Left post
+                ax_goal.axvline(44, color='red', linestyle='--')  # Right post
+                ax_goal.axhline(0, color='red', linestyle='--')   # Goal line
+                ax_goal.axhline(2.66, color='red', linestyle='--')  # Crossbar
+                
+                ax_goal.set_xlim(30, 50)
+                ax_goal.set_ylim(0, 4)
+                ax_goal.set_xlabel("Goal Width (End Y)")
+                ax_goal.set_ylabel("Goal Height (End Z)")
+                ax_goal.set_title("Shot End Location on Goal")
+
+                # Convert the goal plot to image for Streamlit display
+                buf_goal = io.BytesIO()
+                fig_goal.savefig(buf_goal, format="png", facecolor='black')
+                buf_goal.seek(0)
+                image_goal = Image.open(buf_goal)
+                st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
