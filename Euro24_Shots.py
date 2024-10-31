@@ -1,10 +1,13 @@
 import subprocess
 import sys
+import streamlit as st
 
+# Function to install packages
 def install(package):
-    subprocess.check_call([sys.executable,'-m','pip','install',package])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
-packages= [
+# List of required packages
+packages = [
     "streamlit",
     "pandas",
     "mplsoccer",
@@ -13,33 +16,22 @@ packages= [
     "termcolor",
     "colored",
     "statsbombpy",
-    
 ]
 
+# Install packages
 for package in packages:
     try:
         install(package)
     except subprocess.CalledProcessError as e:
         st.write(f"Failed to install {package}: {e}")
 
-
-
-
-
-
-
-
-
-
-
-
+# Importing libraries after ensuring installation
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from statsbombpy import sb
 from mplsoccer import Pitch
-import streamlit as st
 
 def main():
     # Load data
