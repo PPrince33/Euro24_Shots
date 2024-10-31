@@ -90,8 +90,8 @@ if match:
             plt.scatter([], [], color='yellow', marker='o', label='Shooter')
             plt.scatter([], [], color='green', marker='o', label='Attackers')
             plt.scatter([], [], color='red', marker='o', label='Defenders')
-            plt.legend(loc="center left")
             
+            plt.legend(loc="lower center", bbox_to_anchor=(0.5, 1.1), ncol=1, frameon=False, title="Legend")
             # Convert plot to image for Streamlit display
             buf = io.BytesIO()
             fig.savefig(buf, format="png", facecolor='black')
