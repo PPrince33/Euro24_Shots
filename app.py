@@ -13,7 +13,7 @@ euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_m
 unique_matches = euro24_matches['match'].unique().tolist()
 
 # Streamlit UI for Match Selection
-st.title("Euro 2024 Match Analysis")
+st.title("Euro 2024 Shot Analysis")
 match = st.selectbox("Select Match:", unique_matches)
 
 # Filter shots based on selected match
@@ -21,7 +21,9 @@ if match:
     selected_match_id = euro24_matches[euro24_matches['match'] == match]['match_id'].values[0]
     df_shots = sb.events(match_id=selected_match_id)
     df_shots = df_shots[df_shots.type == 'Shot']
-    
+    # Calculate and display team shot statistics as a table
+    team_shots = df_shots.groupby('team')['team'].count().reset_index(name='Total Shots')
+    st.table(team_shots) 
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
