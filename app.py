@@ -21,13 +21,32 @@ if match:
     selected_match_id = euro24_matches[euro24_matches['match'] == match]['match_id'].values[0]
     df_shots = sb.events(match_id=selected_match_id)
     df_shots = df_shots[df_shots.type == 'Shot']
+
     
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
     # Plot pitch with shot information
     if shot_id:
-        selected_shot = df_shots[df_shots.id == shot_id].iloc[0]
+        selected_shot1 = df_shots[df_shots.id == shot_id].iloc[0].reset_index(drop=True)
+        selected_shot = df_shots[df_shots.id == shot_id].iloc[0].reset_index(drop=True)
+
+
+        data = selected_shot.at[0, 'shot_freeze_frame']
+    
+    # Check if data is a list, otherwise skip the iteration
+        if isinstance(data, list):
+        # Convert to DataFrame
+                df = pd.DataFrame([{
+                    'location_x': item['location'][0],
+                    'location_y': item['location'][1],
+                    'player_name': item['player']['name'],
+                    'teammate': item['teammate']
+                        } for item in data])
+
+        
+        selected_shot=pd.concat([selected_shot] * df.shape[0], ignore_index=True)
+
         
         # Create pitch plot
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
@@ -35,10 +54,27 @@ if match:
         ax.set_xlim(75, 130)
 
         # Plot shot details
-        x, y = selected_shot['location']
-        end_x, end_y = selected_shot['shot_end_location'][:2]
+        x, y = selected_shot1['location']
+        end_x, end_y = selected_shot1['shot_end_location'][:2]
         plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
         plt.scatter(x, y, color='yellow', marker='o')
+        for i in range(len(selected_shot)):
+                    # Location markers based on teammate status
+            if df_each_shoot.iloc[i]['teammate']:
+                plt.scatter(selected_shot.iloc[i]['location_x'], df_each_shoot.iloc[i]['location_y'], color='green')
+            else:
+                plt.scatter(df_each_shoot.iloc[i]['location_x'], df_each_shoot.iloc[i]['location_y'], color='red')
+    
+    # Add dummy points for legend only
+    plt.scatter([], [], color='yellow', marker='o', label='Shooter')
+    plt.scatter([], [], color='green', marker='o', label='Attackers')
+    plt.scatter([], [], color='red', marker='o', label='Difenders')
+
+
+
+
+
+
         
         # Convert plot to image for Streamlit display
         buf = io.BytesIO()
