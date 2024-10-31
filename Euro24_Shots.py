@@ -1,3 +1,38 @@
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable,'-m','pip','install',package])
+
+packages= [
+    "streamlit",
+    "pandas",
+    "mplsoccer",
+    "numpy",
+    "matplotlib",
+    "termcolor",
+    "colored",
+    "statsbombpy",
+    
+]
+
+for package in packages:
+    try:
+        install(package)
+    except subprocess.CalledProcessError as e:
+        st.write(f"Failed to install {package}: {e}")
+
+
+
+
+
+
+
+
+
+
+
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
