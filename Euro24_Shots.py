@@ -1,4 +1,4 @@
-pip install pandas numpy matplotlib seaborn statsbombpy mplsoccer streamlit
+
 
 
 import pandas as pd
