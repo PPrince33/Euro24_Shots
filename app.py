@@ -100,6 +100,8 @@ if match:
 
             
             image = Image.open(buf)
+            # Rotate the image 90 degrees counterclockwise (to the left)
+            image = image.rotate(90, expand=True)
             st.image(image, caption="Shot Visualization", use_column_width=True)
             
             # Display shot details in a table format
