@@ -23,8 +23,7 @@ if match:
     df_shots = df_shots[df_shots.type == 'Shot']
     # Calculate and display team shot statistics as a table
     team_shots = df_shots.groupby('team')['team'].count().reset_index(name='Total Shots')
-    
-    st.table(team_shots) 
+    st.table(team_shots.style.hide_index())
     # Dropdown for shot selection
     shot_id = st.selectbox("Select Shot ID:", df_shots['id'].unique())
     
