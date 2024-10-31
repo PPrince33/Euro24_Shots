@@ -1,0 +1,12 @@
+streamlit
+pandas
+mplsoccer
+numpy
+matplotlib
+termcolor
+colored
+statsbombpy
+seaborn
+ipywidgets
+IPython.display
+plotly.express
