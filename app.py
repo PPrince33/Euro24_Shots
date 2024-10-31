@@ -66,9 +66,9 @@ if match:
                 plt.scatter(df_each_shoot.iloc[i]['location_x'], df_each_shoot.iloc[i]['location_y'], color='red')
     
     # Add dummy points for legend only
-    plt.scatter([], [], color='yellow', marker='o', label='Shooter')
-    plt.scatter([], [], color='green', marker='o', label='Attackers')
-    plt.scatter([], [], color='red', marker='o', label='Difenders')
+        plt.scatter([], [], color='yellow', marker='o', label='Shooter')
+        plt.scatter([], [], color='green', marker='o', label='Attackers')
+        plt.scatter([], [], color='red', marker='o', label='Difenders')
 
 
 
