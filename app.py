@@ -53,7 +53,7 @@ if match:
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
             fig, ax = pitch.draw(figsize=(10, 6))
-            ax.set_xlim(75, 130)
+            ax.set_xlim(60, 130)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
 
@@ -74,7 +74,7 @@ if match:
             plt.scatter([], [], color='yellow', marker='o', label='Shooter')
             plt.scatter([], [], color='green', marker='o', label='Attackers')
             plt.scatter([], [], color='red', marker='o', label='Defenders')
-            plt.legend(loc="upper left")
+            plt.legend(loc="center right")
             
             # Convert plot to image for Streamlit display
             buf = io.BytesIO()
