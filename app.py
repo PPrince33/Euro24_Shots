@@ -74,7 +74,7 @@ if match:
             plt.scatter([], [], color='yellow', marker='o', label='Shooter')
             plt.scatter([], [], color='green', marker='o', label='Attackers')
             plt.scatter([], [], color='red', marker='o', label='Defenders')
-            plt.legend(loc="center right")
+            plt.legend(loc="center left")
             
             # Convert plot to image for Streamlit display
             buf = io.BytesIO()
