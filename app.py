@@ -97,7 +97,7 @@ if match:
                 ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
                 ax_goal.plot([36, 36], [0, 2.66], color='white', linestyle='-')  # Left post
                 ax_goal.plot([44, 44], [0, 2.66], color='white', linestyle='-')  # Right post
-                ax_goal.axhline(0, color='green', linestyle='-')   # Goal line at the bottom
+                ax_goal.axhline(0, color='white', linestyle='-')   # Goal line at the bottom
                 ax_goal.plot([36, 44], [2.66, 2.66], color='white', linestyle='-')
 
                 # Set aspect ratio to make the x and y scales equal
