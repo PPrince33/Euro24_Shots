@@ -66,5 +66,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Replace `<repository-url>` with the actual URL of your GitHub repository.
 - Replace `<repository-directory>` with the name of your repository directory.
 - If you have a license file, ensure it is in the same directory as the README and adjust the license section accordingly.
-
-You can copy and paste this directly into your `README.md` file in your GitHub repository. Let me know if you need any changes or additional information!
