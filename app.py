@@ -41,7 +41,8 @@ if match:
         
         # Safely extract 'shot_freeze_frame'
         data = selected_shot.get('shot_freeze_frame', None)
-        
+       
+            
         # Check if data is a list, otherwise skip the iteration
         if isinstance(data, list):
             # Convert to DataFrame
