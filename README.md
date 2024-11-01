@@ -1,6 +1,5 @@
 
 
-```markdown
 # Euro 2024 Shot Analysis
 
 This project is a Streamlit web application that allows users to analyze shot data from the Euro 2024 tournament. Users can select matches and view detailed shot visualizations, including player locations, shot outcomes, and expected goals (xG).
@@ -28,7 +27,6 @@ This project is a Streamlit web application that allows users to analyze shot da
 
 To run this application locally, you need to have Python installed. You can then create a virtual environment and install the required packages:
 
-```bash
 # Clone the repository
 git clone <repository-url>
 cd <repository-directory>
@@ -39,15 +37,14 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
 # Install the required packages
 pip install streamlit pandas plotly statsbombpy mplsoccer matplotlib pillow
-```
 
-## Usage
+
 
 After installing the required packages, you can run the application using the following command:
 
-```bash
+
 streamlit run app.py
-```
+
 
 Open your web browser and navigate to `http://localhost:8501` to view the application.
 
@@ -62,7 +59,7 @@ Contributions are welcome! If you have suggestions for improvements or features,
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
+
 
 ### Instructions:
 - Replace `<repository-url>` with the actual URL of your GitHub repository.
