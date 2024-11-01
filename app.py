@@ -1,3 +1,9 @@
+pip install numpy
+pip install -r requirements.txt
+pip cache purge
+
+
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
