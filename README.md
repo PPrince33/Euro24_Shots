@@ -46,6 +46,7 @@ After installing the required packages, you can run the application using the fo
 streamlit run app.py
 
 
+
 Open your web browser and navigate to `http://localhost:8501` to view the application.
 
 ## Data Source
