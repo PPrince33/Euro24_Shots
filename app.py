@@ -92,7 +92,7 @@ if match:
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
-                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
+                fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
                 ax_goal.set_facecolor('black')
                 ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
                 ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
