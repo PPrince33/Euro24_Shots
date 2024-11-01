@@ -102,7 +102,7 @@ if match:
 
                 # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
-                ax_goal.set_xlim(30, 50)
+                ax_goal.set_xlim(34, 46)
                 ax_goal.set_ylim(0, 4)
                 ax_goal.set_xlabel("Goal Width (End Y)")
                 ax_goal.set_ylabel("Goal Height (End Z)")
