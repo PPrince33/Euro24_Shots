@@ -54,7 +54,7 @@ if match:
             
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-            fig, ax = pitch.draw(figsize=(6, 6))
+            fig, ax = pitch.draw(figsize=(10, 6))
             ax.set_xlim(60, 121)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
@@ -92,35 +92,28 @@ if match:
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
-                fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
+                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
                 ax_goal.set_facecolor('black')
-            
-            # Determine the color of the edge based on shot outcome
-            if selected_shot['shot_outcome'] == 'Goal':
-                edge_color = 'green'  # Green if the shot outcome is a goal
-            else:
-                edge_color = 'red'  # Red otherwise
-        
-            # Plot the shot end location as a yellow dot with an edge color
-            ax_goal.plot(end_y, end_z, 'yo', markeredgecolor=edge_color, markersize=10, markeredgewidth=2)  
-            
-            # Goal posts and lines
-            ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
-            ax_goal.plot([44, 44], [0, 2.66], color='red', linestyle='--')  # Right post
-            ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
-            ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
-        
-            # Set aspect ratio to make the x and y scales equal
-            ax_goal.set_aspect('equal', adjustable='box')
-            ax_goal.set_xlim(34, 46)
-            ax_goal.set_ylim(0, 4)
-            ax_goal.set_xlabel("Goal Width (End Y)")
-            ax_goal.set_ylabel("Goal Height (End Z)")
-            ax_goal.set_title("Shot End Location on Goal")
-        
-            # Show plot
-            plt.show()
-        
+                ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
+                ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
+                ax_goal.plot([44, 44], [0, 2.66], color='red', linestyle='--')  # Right post
+                ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
+                ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
+
+                # Set aspect ratio to make the x and y scales equal
+                ax_goal.set_aspect('equal', adjustable='box')
+                ax_goal.set_xlim(30, 50)
+                ax_goal.set_ylim(0, 4)
+                ax_goal.set_xlabel("Goal Width (End Y)")
+                ax_goal.set_ylabel("Goal Height (End Z)")
+                ax_goal.set_title("Shot End Location on Goal")
+
+                # Convert the goal plot to image for Streamlit display
+                buf_goal = io.BytesIO()
+                fig_goal.savefig(buf_goal, format="png", facecolor='black')
+                buf_goal.seek(0)
+                image_goal = Image.open(buf_goal)
+
             # Create two columns for side-by-side display
             col1, col2 = st.columns(2)
 
