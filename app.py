@@ -89,14 +89,6 @@ if match:
             image = Image.open(buf)
             # Rotate the image 90 degrees counterclockwise (to the left)
             image = image.rotate(90, expand=True)
-            st.image(image, caption="Shot Visualization", use_column_width=True)
-
-            # Display shot details in a table format
-            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
-            st.write(f"**Team:** {selected_shot['team']}")
-            st.write(f"**Player:** {selected_shot['player']}")
-            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
-            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
@@ -108,14 +100,8 @@ if match:
                 ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
                 ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
 
-    # Set aspect ratio to make the x and y scales equal
+                # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
-
-
-
-
-
-                
                 ax_goal.set_xlim(30, 50)
                 ax_goal.set_ylim(0, 4)
                 ax_goal.set_xlabel("Goal Width (End Y)")
@@ -127,4 +113,20 @@ if match:
                 fig_goal.savefig(buf_goal, format="png", facecolor='black')
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
-                st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+
+            # Create two columns for side-by-side display
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.image(image, caption="Shot Visualization", use_column_width=True)
+
+            with col2:
+                if end_z is not None:
+                    st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+
+            # Display shot details in a table format
+            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+            st.write(f"**Team:** {selected_shot['team']}")
+            st.write(f"**Player:** {selected_shot['player']}")
+            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
+            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
