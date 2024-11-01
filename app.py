@@ -114,19 +114,19 @@ if match:
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
 
-            # Create two columns for side-by-side display
+            # Create two columns for the shot visualization and shot details
             col1, col2 = st.columns(2)
 
             with col1:
                 st.image(image, caption="Shot Visualization", use_column_width=True)
 
             with col2:
-                if end_z is not None:
-                    st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+                # Display shot details next to the first graph
+                st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+                st.write(f"**Team:** {selected_shot['team']}")
+                st.write(f"**Player:** {selected_shot['player']}")
+                st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
+                st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
 
-            # Display shot details below the goal plot
-            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
-            st.write(f"**Team:** {selected_shot['team']}")
-            st.write(f"**Player:** {selected_shot['player']}")
-            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
-            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
+            # Display the goal plot below both previous columns
+            st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
