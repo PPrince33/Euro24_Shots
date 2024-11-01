@@ -124,7 +124,7 @@ if match:
                 if end_z is not None:
                     st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
 
-            # Display shot details in a table format
+            # Display shot details below the goal plot
             st.write(f"**Shot Time:** {selected_shot['timestamp']}")
             st.write(f"**Team:** {selected_shot['team']}")
             st.write(f"**Player:** {selected_shot['player']}")
