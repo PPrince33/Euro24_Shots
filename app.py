@@ -97,20 +97,29 @@ if match:
             if end_z is not None:
                 fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
                 ax_goal.set_facecolor('black')
-                ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
+                
+                # Plot the shot end location as a yellow dot
+                ax_goal.plot(end_y, end_z, 'yo')  
+                
+                # Goalposts and goal line
                 ax_goal.plot([36, 36], [0, 2.66], color='white', linestyle='-')  # Left post
                 ax_goal.plot([44, 44], [0, 2.66], color='white', linestyle='-')  # Right post
                 ax_goal.axhline(0, color='white', linestyle='-')   # Goal line at the bottom
                 ax_goal.plot([36, 44], [2.66, 2.66], color='white', linestyle='-')
             
-                # Convert the goal plot to image for Streamlit display
+                # Set aspect ratio to equal
+                ax_goal.set_aspect('equal', adjustable='box')
+            
+                # Set limits for x and y axes
+                ax_goal.set_xlim(35, 45)  # Adjust limits as needed
+                ax_goal.set_ylim(-1, 4)   # Adjust limits as needed
+            
+                # Convert the goal plot to an image for Streamlit display
                 buf_goal = io.BytesIO()
                 fig_goal.savefig(buf_goal, format="png", facecolor='black')
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
-            
-            # Create two columns for side-by-side display
-            col1, col2 = st.columns(2)
+
             
             with col1:
                 st.image(image, caption="Shot Visualization Top View", use_column_width=True)
