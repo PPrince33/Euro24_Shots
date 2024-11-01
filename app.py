@@ -54,7 +54,7 @@ if match:
             
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-            fig, ax = pitch.draw(figsize=(10, 6))
+            fig, ax = pitch.draw(figsize=(6, 6))
             ax.set_xlim(60, 121)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
@@ -92,13 +92,13 @@ if match:
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
-                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
+                fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
                 ax_goal.set_facecolor('black')
                 ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
-                ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
-                ax_goal.plot([44, 44], [0, 2.66], color='red', linestyle='--')  # Right post
-                ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
-                ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
+                ax_goal.plot([36, 36], [0, 2.66], color='white', linestyle='-')  # Left post
+                ax_goal.plot([44, 44], [0, 2.66], color='white', linestyle='-')  # Right post
+                ax_goal.axhline(0, color='green', linestyle='-')   # Goal line at the bottom
+                ax_goal.plot([36, 44], [2.66, 2.66], color='white', linestyle='-')
 
                 # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
