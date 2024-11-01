@@ -122,18 +122,7 @@ if match:
                     st.write("No shot end location available for this shot.")
             
 
-            # # Create two columns for side-by-side display
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.image(image, caption="Shot Visualization Top View", use_column_width=True)
-
-                with col2:
-                    if end_z is not None:
-                        st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
-                    else:
-                        st.write("No shot end location available for this shot.")
-
+            
             # Display shot details in a table format
             st.write(f"**Player:** {selected_shot['player']}")
             st.write(f"**Team:** {selected_shot['team']}")
