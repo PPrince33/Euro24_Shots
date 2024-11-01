@@ -125,7 +125,7 @@ if match:
                     st.image(image_goal, caption="Shot Visualization End Location on Goal", use_column_width=True)
 
             # Display shot details in a table format
-            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+            st.write(f"**Shot Time:** {selected_shot['minute']}")
             st.write(f"**Team:** {selected_shot['team']}")
             st.write(f"**Player:** {selected_shot['player']}")
             st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
