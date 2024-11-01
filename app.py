@@ -74,9 +74,9 @@ if match:
             # Plot freeze frame data
             for i in range(len(df)):
                 if df.iloc[i]['teammate']:
-                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='green' if i == 0 else "")
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='green')
                 else:
-                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='red' if i == 0 else "")
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='red')
             
             # Add dummy points for legend
             plt.scatter([], [], color='yellow', marker='o', label='Shooter')
