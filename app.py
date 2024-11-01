@@ -130,4 +130,9 @@ if match:
             st.write(f"**Minute:** {selected_shot['minute']}")
             st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
             st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
-            
+            # Add a note regarding blocked shots and visibility in the goal plot
+            st.markdown("""
+    **Note:** 
+    - If the shot outcome is "Blocked," the goalposts will not be displayed in the visualization.
+    - If the shots are too far from the goalposts, there may be no points visible in the goal location graph due to the zoomed-in visualization.
+""")
