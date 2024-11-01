@@ -118,11 +118,11 @@ if match:
             col1, col2 = st.columns(2)
 
             with col1:
-                st.image(image, caption="Shot Visualization", use_column_width=True)
+                st.image(image, caption="Shot Visualization Top View", use_column_width=True)
 
             with col2:
                 if end_z is not None:
-                    st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+                    st.image(image_goal, caption="Shot Visualization End Location on Goal", use_column_width=True)
 
             # Display shot details in a table format
             st.write(f"**Shot Time:** {selected_shot['timestamp']}")
