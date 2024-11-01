@@ -43,7 +43,7 @@ if match:
         data = selected_shot.get('shot_freeze_frame', None)
         
         # Check if data is a list, otherwise skip the iteration
-        if isinstance(data, list) and len(data) > 0:
+        if isinstance(data, list):
             # Convert to DataFrame
             df = pd.DataFrame([{
                 'location_x': item['location'][0],
@@ -51,6 +51,7 @@ if match:
                 'player_name': item['player']['name'],
                 'teammate': item['teammate']
             } for item in data])
+            
 
             # Repeat selected_shot details to match the freeze frame data rows
             shot_info_df = pd.DataFrame([selected_shot] * len(df)).reset_index(drop=True)
@@ -127,8 +128,8 @@ if match:
                 image_goal = Image.open(buf_goal)
                 st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
 
-        #else:
-         #   st.write("No freeze frame data available for this shot.")
+        else:
+            st.write("No freeze frame data available for this shot. So it would be a penalty")
 
 st.markdown("""
     **Note:** 
