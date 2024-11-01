@@ -90,7 +90,7 @@ if match:
             # Rotate the image 90 degrees counterclockwise (to the left)
             image = image.rotate(90, expand=True)
 
-            # Initialize image_goal to None
+                        # Initialize image_goal to None
             image_goal = None
             
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
@@ -109,7 +109,7 @@ if match:
             
                 # Set aspect ratio to equal
                 ax_goal.set_aspect('equal', adjustable='box')
-            
+                
                 # Set limits for x and y axes
                 ax_goal.set_xlim(35, 45)  # Adjust limits as needed
                 ax_goal.set_ylim(-1, 4)   # Adjust limits as needed
@@ -119,17 +119,19 @@ if match:
                 fig_goal.savefig(buf_goal, format="png", facecolor='black')
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
-
+            
+            # Create two columns for side-by-side display
+            col1, col2 = st.columns(2)
             
             with col1:
                 st.image(image, caption="Shot Visualization Top View", use_column_width=True)
             
             with col2:
-                if image_goal is not None:
+                if image_goal is not None:  # Check if image_goal is defined
                     st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
                 else:
                     st.write("No shot end location available for this shot.")
-            
+
             # Display shot details in a table format
             st.write(f"**Player:** {selected_shot['player']['name']}")
             st.write(f"**Team:** {selected_shot['team']}")
