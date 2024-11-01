@@ -90,6 +90,9 @@ if match:
             # Rotate the image 90 degrees counterclockwise (to the left)
             image = image.rotate(90, expand=True)
 
+            # Initialize image_goal to None
+            image_goal = None
+            
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
                 fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
@@ -99,20 +102,25 @@ if match:
                 ax_goal.plot([44, 44], [0, 2.66], color='white', linestyle='-')  # Right post
                 ax_goal.axhline(0, color='white', linestyle='-')   # Goal line at the bottom
                 ax_goal.plot([36, 44], [2.66, 2.66], color='white', linestyle='-')
-
-                # Set aspect ratio to make the x and y scales equal
-                ax_goal.set_aspect('equal', adjustable='box')
-                ax_goal.set_xlim(34, 46)
-                ax_goal.set_ylim(0, 3)
-                ax_goal.set_xlabel("Goal Width (End Y)")
-                ax_goal.set_ylabel("Goal Height (End Z)")
-                ax_goal.set_title("Shot End Location on Goal")
-
+            
                 # Convert the goal plot to image for Streamlit display
                 buf_goal = io.BytesIO()
                 fig_goal.savefig(buf_goal, format="png", facecolor='black')
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
+            
+            # Create two columns for side-by-side display
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.image(image, caption="Shot Visualization Top View", use_column_width=True)
+            
+            with col2:
+                if image_goal is not None:
+                    st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+                else:
+                    st.write("No shot end location available for this shot.")
+            
 
             # # Create two columns for side-by-side display
                 col1, col2 = st.columns(2)
