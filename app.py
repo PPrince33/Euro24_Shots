@@ -1,14 +1,3 @@
-pip install numpy==1.23.5
-pip install streamlit==1.39.0
-pip install pandas==1.5.0
-pip install plotly==5.10.0
-pip install statsbombpy==1.4.0
-pip install matplotlib==3.6.0
-pip install Pillow==9.3.0
-pip install mplsoccer==1.0.2
-
-
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -46,11 +35,11 @@ if match:
         # Access shot details for selected shot
         selected_shot = df_shots[df_shots.id == shot_id].iloc[0]
         
-        # Extract 'shot_freeze_frame' safely
+        # Safely extract 'shot_freeze_frame'
         data = selected_shot.get('shot_freeze_frame', None)
         
         # Check if data is a list, otherwise skip the iteration
-        if isinstance(data, list):
+        if isinstance(data, list) and len(data) > 0:
             # Convert to DataFrame
             df = pd.DataFrame([{
                 'location_x': item['location'][0],
@@ -76,15 +65,15 @@ if match:
             end_z = selected_shot['shot_end_location'][2] if len(selected_shot['shot_end_location']) > 2 else None
 
             plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
-            plt.scatter(x, y, color='yellow', marker='o')
+            plt.scatter(x, y, color='yellow', marker='o', label='Shooter')
 
             # Plot freeze frame data
             for i in range(len(df)):
                 if df.iloc[i]['teammate']:
-                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='green')
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='green', label='Attackers' if i == 0 else "")
                 else:
-                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='red')
-
+                    plt.scatter(df.iloc[i]['location_x'], df.iloc[i]['location_y'], color='red', label='Defenders' if i == 0 else "")
+            
             # Add dummy points for legend
             plt.scatter([], [], color='yellow', marker='o', label='Shooter')
             plt.scatter([], [], color='green', marker='o', label='Attackers')
@@ -119,14 +108,8 @@ if match:
                 ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
                 ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
 
-    # Set aspect ratio to make the x and y scales equal
+                # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
-
-
-
-
-
-                
                 ax_goal.set_xlim(30, 50)
                 ax_goal.set_ylim(0, 4)
                 ax_goal.set_xlabel("Goal Width (End Y)")
@@ -139,3 +122,6 @@ if match:
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
                 st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+
+        else:
+            st.write("No freeze frame data available for this shot.")
