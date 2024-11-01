@@ -13,7 +13,7 @@ euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_m
 unique_matches = euro24_matches['match'].unique().tolist()
 
 # Streamlit UI for Match Selection
-st.title("Euro 2024 Shot Analysis")
+st.title("Euro 2024 Shot Visualization")
 match = st.selectbox("Select Match:", unique_matches)
 
 # Filter shots based on selected match
