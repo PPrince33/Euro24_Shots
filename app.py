@@ -127,8 +127,8 @@ if match:
                 image_goal = Image.open(buf_goal)
                 st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
 
-        else:
-            st.write("No freeze frame data available for this shot.")
+        #else:
+         #   st.write("No freeze frame data available for this shot.")
 
 st.markdown("""
     **Note:** 
