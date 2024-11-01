@@ -1,11 +1,9 @@
-sudo apt-get install python3-distutils
 
-pip install --upgrade pip
-pip install -r requirements.txt
 
 
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 from statsbombpy import sb
 from mplsoccer import Pitch
