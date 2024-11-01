@@ -1,6 +1,11 @@
-pip install numpy
-pip install -r requirements.txt
-pip cache purge
+pip install numpy==1.23.5
+pip install streamlit==1.39.0
+pip install pandas==1.5.0
+pip install plotly==5.10.0
+pip install statsbombpy==1.4.0
+pip install matplotlib==3.6.0
+pip install Pillow==9.3.0
+pip install mplsoccer==1.0.2
 
 
 
