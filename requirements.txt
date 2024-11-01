@@ -1,7 +1,7 @@
-streamlit
-pandas
-plotly
-statsbombpy
-mplsoccer
-matplotlib
-Pillow
+streamlit==1.19.0
+pandas==1.5.0
+plotly==5.10.0
+statsbombpy==1.4.0
+mplsoccer==1.0.2
+matplotlib==3.6.0
+Pillow==9.3.0
