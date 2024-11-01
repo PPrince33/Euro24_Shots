@@ -69,7 +69,7 @@ if match:
             end_z = selected_shot['shot_end_location'][2] if len(selected_shot['shot_end_location']) > 2 else None
 
             plt.plot((x, end_x), (y, end_y), color="yellow", linestyle='--')
-            plt.scatter(x, y, color='yellow', marker='o', label='Shooter')
+            plt.scatter(x, y, color='yellow', marker='o')
 
             # Plot freeze frame data
             for i in range(len(df)):
