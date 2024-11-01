@@ -54,7 +54,7 @@ if match:
             
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-            fig, ax = pitch.draw(figsize=(10, 6))
+            fig, ax = pitch.draw(figsize=(6, 6))
             ax.set_xlim(60, 121)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
@@ -92,7 +92,7 @@ if match:
             st.image(image, caption="Shot Visualization", use_column_width=True)
 
             # Display shot details in a table format
-            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+            st.write(f"**Minute:** {selected_shot['minute']}")
             st.write(f"**Team:** {selected_shot['team']}")
             st.write(f"**Player:** {selected_shot['player']}")
             st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
@@ -100,7 +100,7 @@ if match:
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
-                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
+                fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
                 ax_goal.set_facecolor('black')
                 ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
                 ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
@@ -110,8 +110,8 @@ if match:
 
                 # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
-                ax_goal.set_xlim(30, 50)
-                ax_goal.set_ylim(0, 4)
+                ax_goal.set_xlim(34, 46)
+                ax_goal.set_ylim(0, 2.8)
                 ax_goal.set_xlabel("Goal Width (End Y)")
                 ax_goal.set_ylabel("Goal Height (End Z)")
                 ax_goal.set_title("Shot End Location on Goal")
