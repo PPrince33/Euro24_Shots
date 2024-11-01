@@ -13,7 +13,7 @@ euro24_matches['match'] = euro24_matches['competition_stage'] + ' : ' + euro24_m
 unique_matches = euro24_matches['match'].unique().tolist()
 
 # Streamlit UI for Match Selection
-st.title("Euro 2024 Shot Visualization")
+st.title("Euro 2024 Shot Analysis")
 match = st.selectbox("Select Match:", unique_matches)
 
 # Filter shots based on selected match
@@ -54,7 +54,7 @@ if match:
             
             # Create pitch plot
             pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-            fig, ax = pitch.draw(figsize=(6, 6))
+            fig, ax = pitch.draw(figsize=(10, 6))
             ax.set_xlim(60, 121)
             fig.patch.set_facecolor('black')  # Set figure background to black
             ax.set_facecolor('black')  
@@ -89,58 +89,42 @@ if match:
             image = Image.open(buf)
             # Rotate the image 90 degrees counterclockwise (to the left)
             image = image.rotate(90, expand=True)
+            st.image(image, caption="Shot Visualization", use_column_width=True)
 
-                        # Initialize image_goal to None
-            image_goal = None
-            
+            # Display shot details in a table format
+            st.write(f"**Shot Time:** {selected_shot['timestamp']}")
+            st.write(f"**Team:** {selected_shot['team']}")
+            st.write(f"**Player:** {selected_shot['player']}")
+            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
+            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
+
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
-                fig_goal, ax_goal = plt.subplots(figsize=(6, 6))
+                fig_goal, ax_goal = plt.subplots(figsize=(5, 3))
                 ax_goal.set_facecolor('black')
-                
-                # Plot the shot end location as a yellow dot
-                ax_goal.plot(end_y, end_z, 'yo')  
-                
-                # Goalposts and goal line
-                ax_goal.plot([36, 36], [0, 2.66], color='white', linestyle='-')  # Left post
-                ax_goal.plot([44, 44], [0, 2.66], color='white', linestyle='-')  # Right post
-                ax_goal.axhline(0, color='white', linestyle='-')   # Goal line at the bottom
-                ax_goal.plot([36, 44], [2.66, 2.66], color='white', linestyle='-')
-            
-                # Set aspect ratio to equal
+                ax_goal.plot(end_y, end_z, 'yo')  # Plot the shot end location as a yellow dot
+                ax_goal.plot([36, 36], [0, 2.66], color='red', linestyle='--')  # Left post
+                ax_goal.plot([44, 44], [0, 2.66], color='red', linestyle='--')  # Right post
+                ax_goal.axhline(0, color='green', linestyle='--')   # Goal line at the bottom
+                ax_goal.plot([36, 44], [2.66, 2.66], color='red', linestyle='--')
+
+    # Set aspect ratio to make the x and y scales equal
                 ax_goal.set_aspect('equal', adjustable='box')
+
+
+
+
+
                 
-                # Set limits for x and y axes
-                ax_goal.set_xlim(35, 45)  # Adjust limits as needed
-                ax_goal.set_ylim(-1, 4)   # Adjust limits as needed
-            
-                # Convert the goal plot to an image for Streamlit display
+                ax_goal.set_xlim(30, 50)
+                ax_goal.set_ylim(0, 4)
+                ax_goal.set_xlabel("Goal Width (End Y)")
+                ax_goal.set_ylabel("Goal Height (End Z)")
+                ax_goal.set_title("Shot End Location on Goal")
+
+                # Convert the goal plot to image for Streamlit display
                 buf_goal = io.BytesIO()
                 fig_goal.savefig(buf_goal, format="png", facecolor='black')
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
-            
-            # Create two columns for side-by-side display
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.image(image, caption="Shot Visualization Top View", use_column_width=True)
-            
-            with col2:
-                if image_goal is not None:  # Check if image_goal is defined
-                    st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
-                else:
-                    st.write("No shot end location available for this shot.")
-
-            # Display shot details in a table format
-            st.write(f"**Player:** {selected_shot['player']['name']}")
-            st.write(f"**Team:** {selected_shot['team']}")
-            st.write(f"**Minute:** {selected_shot['minute']}")
-            st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
-            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
-            # Add a note regarding blocked shots and visibility in the goal plot
-            st.markdown("""
-**Note:** 
-- If the shot outcome is "Blocked," the goalposts will not be displayed in the visualization.
-- If the shots are too far from the goalposts, there may be no points visible in the goal location graph due to the zoomed-in visualization.
-""")
+                st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
