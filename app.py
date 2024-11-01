@@ -96,11 +96,11 @@ if match:
             st.image(image, caption="Shot Visualization", use_column_width=True)
 
             # Display shot details in a table format
-            st.write(f"**Minute:** {selected_shot['minute']}")
-            st.write(f"**Team:** {selected_shot['team']}")
             st.write(f"**Player:** {selected_shot['player']}")
-            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
+            st.write(f"**Team:** {selected_shot['team']}")
+            st.write(f"**Minute:** {selected_shot['minute']}")
             st.write(f"**Expected Goals (xG):** {selected_shot['shot_statsbomb_xg']}")
+            st.write(f"**Shot Outcome:** {selected_shot['shot_outcome']}")
 
             # Optional - Plot shot end location on a goal-like grid if `end_z` exists
             if end_z is not None:
@@ -129,3 +129,9 @@ if match:
 
         else:
             st.write("No freeze frame data available for this shot.")
+
+st.markdown("""
+    **Note:** 
+    - If the shot outcome is "Blocked," the goalposts will not be displayed in the visualization.
+    - If the shots are too far from the goalposts, there may be no points visible in the goal location graph due to the zoomed-in visualization.
+""")
