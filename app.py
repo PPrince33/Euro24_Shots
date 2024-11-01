@@ -114,15 +114,17 @@ if match:
                 buf_goal.seek(0)
                 image_goal = Image.open(buf_goal)
 
-            # Create two columns for side-by-side display
-            col1, col2 = st.columns(2)
+            # # Create two columns for side-by-side display
+                col1, col2 = st.columns(2)
 
-            with col1:
-                st.image(image, caption="Shot Visualization Top View", use_column_width=True)
+                with col1:
+                    st.image(image, caption="Shot Visualization Top View", use_column_width=True)
 
-            with col2:
-                if end_z is not None:
-                    st.image(image_goal, caption="Shot Visualization End Location on Goal", use_column_width=True)
+                with col2:
+                    if end_z is not None:
+                        st.image(image_goal, caption="Shot End Location on Goal", use_column_width=True)
+                    else:
+                        st.write("No shot end location available for this shot.")
 
             # Display shot details in a table format
             st.write(f"**Player:** {selected_shot['player']}")
